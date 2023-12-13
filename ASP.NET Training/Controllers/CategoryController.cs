@@ -26,7 +26,7 @@ namespace ASP.NET_Training.Controllers
         //Post
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Category obj)
+        public async Task<IActionResult> Create(Category obj)
         {
             if(obj.Name == obj.DisplayOrder.ToString())
             {
@@ -35,7 +35,7 @@ namespace ASP.NET_Training.Controllers
             if (ModelState.IsValid)
             {
                 _db.Categories.Add(obj);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
                 TempData["success"] = "Category Created Succesfully";
                 return RedirectToAction("Index");
             }

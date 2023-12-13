@@ -11,9 +11,9 @@ namespace ASP.NET_Training
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(
                 builder.Configuration.GetConnectionString("DefaultConnection")));
-
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
