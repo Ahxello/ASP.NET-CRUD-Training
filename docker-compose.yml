@@ -1,0 +1,29 @@
+version: '3.4'
+networks:
+  aspnet-training-dev:
+    driver: bridge
+services:
+  asp.nettraining:
+    image: ${DOCKER_REGISTRY-}aspnettraining
+    build:
+      context: .
+      dockerfile: ASP.NET Training/Dockerfile
+    ports:
+        - "80:80"
+    networks:
+        - aspnet-training-dev
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: admin
+        POSTGRES_DB: usersdb
+    ports:
+        - "5432:5432"
+    networks:
+        - aspnet-training-dev
+    volumes:
+        - postgres-data:/var/lib/postgresql/data
+volumes:
+  postgres-data:
